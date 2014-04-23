@@ -66,8 +66,8 @@
 		<dependency>
 			<groupId>junixsocket</groupId>
 			<artifactId>junixsocket</artifactId>
-			<version>1.3</version>
-			<systemPath>${basedir}/lib/junixsocket-1.3.jar</systemPath>
+			<version>1.4</version>
+			<systemPath>${basedir}/junixsocket-1.4-gd/dist/junixsocket-1.4.jar</systemPath>
 			<scope>system</scope>
 		</dependency>
 	</dependencies>
@@ -90,7 +90,7 @@
 				<configuration>
 					<systemPropertyVariables>
 						<redis-hosts>${redis-hosts}</redis-hosts>
-						<java.library.path>{basedir}/junixsocket-1.3/libjunixsocket-linux-1.5-amd64.so</java.library.path>
+						<java.library.path>{basedir}/junixsocket-1.4-gd/libjunixsocket-linux-1.6-amd64.so</java.library.path>
 					</systemPropertyVariables>
 				</configuration>
 			</plugin>
