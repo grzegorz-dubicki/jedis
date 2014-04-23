@@ -13,6 +13,7 @@ import static redis.clients.jedis.Protocol.Keyword.RESET;
 import static redis.clients.jedis.Protocol.Keyword.STORE;
 import static redis.clients.jedis.Protocol.Keyword.WITHSCORES;
 
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -42,6 +43,10 @@ public class BinaryClient extends Connection {
 	return isInMulti;
     }
 
+    protected BinaryClient(final Socket socket){
+    	super(socket);
+    }
+    
     public BinaryClient(final String host) {
 	super(host);
     }
