@@ -20,6 +20,7 @@ public class ResponseTest {
 	@Before
 	public void initializeTests(){
 		connection = new Jedis(redis1.host, redis1.port);
+		connection.auth("foobared");
 	}
 	
 	@After
