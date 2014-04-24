@@ -1,5 +1,7 @@
 package redis.clients.jedis;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -9,6 +11,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.newsclub.net.unix.AFUNIXSocket;
+import org.newsclub.net.unix.AFUNIXSocketAddress;
+
 import redis.clients.jedis.BinaryClient.LIST_POSITION;
 import redis.clients.util.SafeEncoder;
 import redis.clients.util.Slowlog;
@@ -17,6 +22,11 @@ public class Jedis extends BinaryJedis implements JedisCommands {
 	
 	protected Jedis(final Socket socket){
     	super(socket);
+    }
+    
+	public Jedis(final String path, boolean thisIsUnixSocket) throws IOException {
+		// FIXME: nasty hack to extend API
+		super(getUnixSocket(path));
     }
 	
 	public Jedis(final String host) {
@@ -35,6 +45,13 @@ public class Jedis extends BinaryJedis implements JedisCommands {
 	super(shardInfo);
     }
 
+    private static Socket getUnixSocket(String url) throws IOException {
+    	File socketFile = new File(url);
+    	AFUNIXSocket socket = AFUNIXSocket.newInstance();
+    	socket.connect(new AFUNIXSocketAddress(socketFile));
+    	return socket;
+    }
+    
     public String ping() {
 	checkIsInMulti();
 	client.ping();
