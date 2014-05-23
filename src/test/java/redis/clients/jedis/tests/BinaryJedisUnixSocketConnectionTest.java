@@ -31,14 +31,14 @@ public class BinaryJedisUnixSocketConnectionTest extends Assert {
 
     @Test(expected = JedisException.class)
     public void checkCorrectSchemeWrongFile() {
-	bJedis = new BinaryJedis("unics:///this/will/NOT/exist");
+	bJedis = new BinaryJedis("unix:///this/will/NOT/exist");
 	bJedis.connect();
 	bJedis.disconnect();
     }
     
     @Test
     public void checkCorrectSchemeCorrectFile() {
-	bJedis = new BinaryJedis("unics:///tmp/redis.sock");
+	bJedis = new BinaryJedis("unix:///tmp/redis.sock");
 	bJedis.connect();
 	bJedis.disconnect();
     }
