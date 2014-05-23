@@ -18,8 +18,9 @@ import redis.clients.util.Slowlog;
 public class Jedis extends BinaryJedis implements JedisCommands,
 	MultiKeyCommands, AdvancedJedisCommands, ScriptingCommands,
 	BasicCommands, ClusterCommands {
-    public Jedis(final String host) {
-	super(host);
+	
+    public Jedis(final String hostOrPathname) {
+	super(hostOrPathname);
     }
 
     public Jedis(final String host, final int port) {

@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Set;
 
 import redis.clients.jedis.BinaryClient.LIST_POSITION;
+import redis.clients.jedis.exceptions.JedisConnectionException;
 import redis.clients.jedis.exceptions.JedisDataException;
 import redis.clients.jedis.exceptions.JedisException;
 import redis.clients.util.JedisByteHashMap;
@@ -23,16 +24,22 @@ public class BinaryJedis implements BasicCommands, BinaryJedisCommands,
 	BinaryScriptingCommands, Closeable {
     protected Client client = null;
 
-    public BinaryJedis(final String host) {
-	URI uri = URI.create(host);
-	if (uri.getScheme() != null && uri.getScheme().equals("redis")) {
-	    client = new Client(uri.getHost(), uri.getPort());
-	    client.auth(uri.getUserInfo().split(":", 2)[1]);
-	    client.getStatusCodeReply();
-	    client.select(Integer.parseInt(uri.getPath().split("/", 2)[1]));
-	    client.getStatusCodeReply();
+    public BinaryJedis(final String hostOrPathname) {
+	URI uri = URI.create(hostOrPathname);
+	if (uri.getScheme() != null) {
+		if (uri.getScheme().equals("unix")) {
+			client = new Client(hostOrPathname.replaceFirst("unix:\\/\\/", ""));
+		} else if (uri.getScheme().equals("redis")) {
+		    client = new Client(uri.getHost(), uri.getPort());
+		    client.auth(uri.getUserInfo().split(":", 2)[1]);
+		    client.getStatusCodeReply();
+		    client.select(Integer.parseInt(uri.getPath().split("/", 2)[1]));
+		    client.getStatusCodeReply();
+		} else {
+			throw new JedisException("Incorrect URI - neither unix socket nor TCP socket: '" + uri.toString() + "'");
+		}
 	} else {
-	    client = new Client(host);
+		client = new Client(hostOrPathname, Protocol.DEFAULT_PORT);
 	}
     }
 
@@ -52,11 +59,17 @@ public class BinaryJedis implements BasicCommands, BinaryJedisCommands,
     }
 
     public BinaryJedis(URI uri) {
-	client = new Client(uri.getHost(), uri.getPort());
-	client.auth(uri.getUserInfo().split(":", 2)[1]);
-	client.getStatusCodeReply();
-	client.select(Integer.parseInt(uri.getPath().split("/", 2)[1]));
-	client.getStatusCodeReply();
+	if (uri.getScheme().equals("unix")) {
+		client = new Client(uri.toString().replaceFirst("unix:\\/\\/", ""));
+	} else if (uri.getScheme().equals("redis")) {
+		client = new Client(uri.getHost(), uri.getPort());
+		client.auth(uri.getUserInfo().split(":", 2)[1]);
+		client.getStatusCodeReply();
+		client.select(Integer.parseInt(uri.getPath().split("/", 2)[1]));
+		client.getStatusCodeReply();
+	} else {
+		throw new JedisException("Incorrect URI - neither unix socket nor TCP socket: '" + uri.toString() + "'");
+	}
     }
 
     public String ping() {

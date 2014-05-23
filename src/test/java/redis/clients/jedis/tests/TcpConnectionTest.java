@@ -6,14 +6,15 @@ import org.junit.Before;
 import org.junit.Test;
 
 import redis.clients.jedis.Connection;
+import redis.clients.jedis.TcpConnection;
 import redis.clients.jedis.exceptions.JedisConnectionException;
 
-public class ConnectionTest extends Assert {
-    private Connection client;
+public class TcpConnectionTest extends Assert {
+    private TcpConnection client;
 
     @Before
     public void setUp() throws Exception {
-	client = new Connection();
+	client = new TcpConnection();
     }
 
     @After

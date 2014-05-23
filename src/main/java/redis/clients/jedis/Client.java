@@ -11,8 +11,9 @@ import java.util.Map.Entry;
 import redis.clients.util.SafeEncoder;
 
 public class Client extends BinaryClient implements Commands {
-    public Client(final String host) {
-	super(host);
+	
+    public Client(final String pathname) {
+	super(pathname);
     }
 
     public Client(final String host, final int port) {
@@ -951,4 +952,5 @@ public class Client extends BinaryClient implements Commands {
 	cluster(Protocol.CLUSTER_SETSLOT, String.valueOf(slot),
 		Protocol.CLUSTER_SETSLOT_IMPORTING, nodeId);
     }
+
 }

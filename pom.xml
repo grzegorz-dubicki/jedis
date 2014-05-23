@@ -66,6 +66,23 @@
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
+		<dependency>
+			<optional>true</optional>
+	      	<groupId>org.newsclub</groupId>
+	      	<artifactId>junixsocket</artifactId>
+	      	<version>1.4</version>
+	      	<scope>system</scope>
+	      	<systemPath>${basedir}/../junixsocket/jar/junixsocket-1.4.jar</systemPath>
+	    </dependency>
+	    <dependency>
+			<optional>true</optional>
+	      	<groupId>org.newsclub</groupId>
+	      	<artifactId>junixsocket</artifactId>
+	      	<classifier>native-linux</classifier>
+	      	<version>1.4</version>
+	      	<scope>system</scope>
+	      	<systemPath>${basedir}/../junixsocket/jar/junixsocket-native-linux-1.4.jar</systemPath>
+	    </dependency>
 	</dependencies>
 
   <distributionManagement>
