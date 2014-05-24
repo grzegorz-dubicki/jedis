@@ -26,7 +26,7 @@ public abstract class UnixSocketJedisCommandTestBase extends JedisTestBase {
     public void setUp() throws Exception {
 	jedis = new Jedis("unix:///tmp/redis.sock");
 	jedis.connect();
-	jedis.auth("foobared");
+	//jedis.auth("foobared");
 	jedis.flushAll();
     }
 
@@ -38,7 +38,7 @@ public abstract class UnixSocketJedisCommandTestBase extends JedisTestBase {
     protected Jedis createJedis() {
 	Jedis j = new Jedis("unix:///tmp/redis.sock");
 	j.connect();
-	j.auth("foobared");
+	//j.auth("foobared");
 	j.flushAll();
 	return j;
     }
