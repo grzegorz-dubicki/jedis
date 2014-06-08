@@ -8,13 +8,14 @@ import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.tests.HostAndPortUtil;
 
-public class GetSetBenchmark {
+public class UnixSocketGetSetBenchmark {
     private static HostAndPort hnp = HostAndPortUtil.getRedisServers().get(0);
     private static final int TOTAL_OPERATIONS = 100000;
 
     public static void main(String[] args) throws UnknownHostException,
 	    IOException {
-	Jedis jedis = new Jedis(hnp.getHost(), hnp.getPort());
+	//Jedis jedis = new Jedis(hnp.getHost(), hnp.getPort());
+	Jedis jedis = new Jedis("unix:///tmp/redis.sock");
 	jedis.connect();
 	//jedis.auth("foobared");
 	jedis.flushAll();
