@@ -6,6 +6,11 @@
 
 This fork has been made for my experimental project of merging unix socket support pull request by @nachogiljaldo (https://github.com/xetorthio/jedis/pull/245) into jedis release 2.1.0 and make it work. :)
 
+## Requirements
+
+* https://github.com/grzegorz-dubicki/junixsocket
+* ...
+
 ## Status
 
 STATUS: *not working yet*...
